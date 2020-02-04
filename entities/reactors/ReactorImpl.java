@@ -12,7 +12,7 @@ public abstract class ReactorImpl implements Reactor {
     private ModuleContainer container;
 
     protected ReactorImpl(int id, int modulesCapacity) {
-        this.id += id;//FIXME Is this the correct logic here?
+        this.id = id;
         this.container = new ModuleContainer(modulesCapacity);
     }
 

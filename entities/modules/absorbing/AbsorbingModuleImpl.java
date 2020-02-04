@@ -5,7 +5,7 @@ public abstract class AbsorbingModuleImpl implements AbsorbingModule {
     private int heatAbsorbing;
 
     protected AbsorbingModuleImpl(int id, int heatAbsorbing) {
-        this.id = ++id;
+        this.id = id;
         this.heatAbsorbing = heatAbsorbing;
     }
 
