@@ -123,8 +123,8 @@ public class ManagerImpl implements Manager {
         long cryoReactorsCount = getCountOfReactorsByType(this.reactors, "CryoReactor");
         long heatReactorsCount = getCountOfReactorsByType(this.reactors, "HeatReactor");
 
-        long energyModulesCount = getCountOfModulesByType(this.reactors, "EnergyModule");
-        long absorbingModulesCount = getCountOfModulesByType(this.reactors, "AbsorbingModule");
+        long energyModulesCount = getCountOfModulesByType(this.reactors, "EnergyModuleImpl");
+        long absorbingModulesCount = getCountOfModulesByType(this.reactors, "AbsorbingModuleImpl");
 
         long totalEnergyOutput = sumTotalEnergyOutput(this.reactors);
         long totalHeatOutput = sumTotalHeatOutput(this.reactors);
@@ -166,9 +166,10 @@ public class ManagerImpl implements Manager {
                 method.setAccessible(true);
 
                 List<Module> allModules = (List<Module>) method.invoke(container);
-                modulesCount = allModules
+
+                modulesCount += allModules
                         .stream()
-                        .filter(m -> m.getClass().getSimpleName().equals(className))
+                        .filter(m -> m.getClass().getSuperclass().getSimpleName().equals(className))
                         .count();
 
             } catch (NoSuchFieldException
