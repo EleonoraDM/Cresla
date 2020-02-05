@@ -40,7 +40,6 @@ public abstract class ReactorImpl implements Reactor {
         } else {
             totalEnergy = this.container.getTotalEnergyOutput();
         }
-        //FIXME Should this logic be here?
         if (totalEnergy > this.getTotalHeatAbsorbing()) {
             totalEnergy = 0;
         }
