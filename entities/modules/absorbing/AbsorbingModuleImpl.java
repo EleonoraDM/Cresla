@@ -18,4 +18,15 @@ public abstract class AbsorbingModuleImpl implements AbsorbingModule {
     public int getId() {
         return this.id;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb
+                .append(String.format("%s Module – %d", this.getClass().getSimpleName(), this.getId()))
+                .append(System.lineSeparator())
+                .append(String.format("Heat Absorbing: %d", this.getHeatAbsorbing()));
+
+        return sb.toString();
+    }
 }

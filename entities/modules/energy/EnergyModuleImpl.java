@@ -18,4 +18,18 @@ public abstract class EnergyModuleImpl implements EnergyModule {
     public int getId() {
         return this.id;
     }
+
+   /* {moduleType} Module – {moduleId}
+    {additionalParam}: {additionalParamValue}*/
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb
+                .append(String.format("%s Module – %d", this.getClass().getSimpleName(), this.getId()))
+                .append(System.lineSeparator())
+                .append(String.format("Energy Output: %d", this.getEnergyOutput()));
+
+        return sb.toString();
+    }
 }

@@ -41,7 +41,7 @@ public abstract class ReactorImpl implements Reactor {
             totalEnergy = this.container.getTotalEnergyOutput();
         }
         //FIXME Should this logic be here?
-        if (totalEnergy > this.getTotalHeatAbsorbing()){
+        if (totalEnergy > this.getTotalHeatAbsorbing()) {
             totalEnergy = 0;
         }
         return totalEnergy;
@@ -73,5 +73,19 @@ public abstract class ReactorImpl implements Reactor {
     @Override
     public int getId() {
         return this.id;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb
+                .append(String.format("%s – %d", this.getClass().getSimpleName(), this.getId()))
+                .append(System.lineSeparator())
+                .append(String.format("Energy Output: %d", this.getTotalEnergyOutput()))
+                .append(System.lineSeparator())
+                .append(String.format("Heat Absorbing: %d", this.getTotalHeatAbsorbing()))
+                .append(System.lineSeparator())
+                .append(String.format("Modules: %d", this.getModuleCount()));
+        return sb.toString();
     }
 }

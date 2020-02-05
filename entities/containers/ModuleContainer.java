@@ -1,5 +1,6 @@
 package entities.containers;
 
+import entities.modules.Module;
 import entities.modules.absorbing.AbsorbingModule;
 import entities.modules.energy.EnergyModule;
 
@@ -16,6 +17,11 @@ public class ModuleContainer implements Container {
         this.moduleCapacity = moduleCapacity;
         this.energyModules = new LinkedHashMap<>();
         this.absorbingModules = new LinkedHashMap<>();
+    }
+
+    private Module searchModuleById(int id) {
+        return this.energyModules.containsKey(id)
+                ? this.energyModules.get(id) : this.absorbingModules.get(id);
     }
 
     private int getCurrentCapacityLevel() {
@@ -73,10 +79,10 @@ public class ModuleContainer implements Container {
                 .min(Integer::compareTo)
                 .orElse(null);
 
-        if (oldestAbsorbId != null && oldestEnergyId != null){
-            if (oldestAbsorbId < oldestEnergyId){
+        if (oldestAbsorbId != null && oldestEnergyId != null) {
+            if (oldestAbsorbId < oldestEnergyId) {
                 this.absorbingModules.remove(oldestAbsorbId);
-            }else {
+            } else {
                 this.energyModules.remove(oldestEnergyId);
             }
         }

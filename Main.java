@@ -1,24 +1,28 @@
-import entities.modules.absorbing.AbsorbingModule;
-import entities.modules.absorbing.CooldownSystem;
-import entities.reactors.CryoReactor;
-import entities.reactors.Reactor;
+import core.Manager;
+import core.ManagerImpl;
 
-import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        Reactor reactor = new CryoReactor(1, 10, 5);
-        AbsorbingModule module = new CooldownSystem(0, 4);
-        reactor.addAbsorbingModule(module);
-        int moduleCount = 0;
 
-        try {
-            moduleCount = reactor.getModuleCount();
-        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        Manager manager = new ManagerImpl();
+        List<String> arguments1 = new ArrayList<>(Arrays.asList("Cryo", "10", "10"));
+        manager.reactorCommand(arguments1);
 
-        System.out.println(moduleCount);
+        List<String> arguments2 = new ArrayList<>(Arrays.asList("1", "Cryogenrod", "100"));
+        manager.moduleCommand(arguments2);
+        List<String> arguments3 = new ArrayList<>(Arrays.asList("1", "Cryogenrod", "100"));
+        manager.moduleCommand(arguments3);
+
+
+        List<String> arguments4 = new ArrayList<>(Arrays.asList("2", "2"));
+        String result = manager.reportCommand(arguments4);
+
+
+        System.out.println(result);
 
     }
 }

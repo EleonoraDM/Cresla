@@ -13,6 +13,8 @@ import entities.reactors.Reactor;
 import entities.reactors.ReactorImpl;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +40,6 @@ public class ManagerImpl implements Manager {
         int addParam = Integer.parseInt(arguments.get(1));
         int moduleCapacity = Integer.parseInt(arguments.get(2));
 
-        //
         if (type.equals("Cryo")) {
             reactor = new CryoReactor(++this.idCounter, moduleCapacity, addParam);
         } else {
@@ -83,8 +84,11 @@ public class ManagerImpl implements Manager {
     public String reportCommand(List<String> arguments) {
         int id = Integer.parseInt(arguments.get(0));
 
+        String result = null;
+
         if (this.reactors.containsKey(id)) {
             Reactor reactor = this.reactors.get(id);
+            result = reactor.toString();
         } else {
             for (Reactor reactor : this.reactors.values()) {
                 try {
@@ -92,21 +96,21 @@ public class ManagerImpl implements Manager {
                     field.setAccessible(true);
 
                     ModuleContainer container = (ModuleContainer) field.get(reactor);
+                    Method searchModuleById =
+                            ModuleContainer.class.getDeclaredMethod("searchModuleById", int.class);
+                    searchModuleById.setAccessible(true);
+                    Object module = searchModuleById.invoke(container, id);
+                    result = module.toString();
 
-                    Field energyModules = container.getClass().getDeclaredField("energyModules");
-                    Field absorbingModules = container.getClass().getDeclaredField("absorbingModules");
-                    energyModules.setAccessible(true);
-                    absorbingModules.setAccessible(true);
-
-
-                } catch (NoSuchFieldException | IllegalAccessException e) {
+                } catch (NoSuchFieldException
+                        | IllegalAccessException
+                        | NoSuchMethodException
+                        | InvocationTargetException e) {
                     e.printStackTrace();
                 }
             }
         }
-
-
-        return null;
+        return result;
     }
 
     @Override
