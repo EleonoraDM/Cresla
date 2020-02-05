@@ -79,7 +79,7 @@ public abstract class ReactorImpl implements Reactor {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb
-                .append(String.format("%s – %d", this.getClass().getSimpleName(), this.getId()))
+                .append(String.format("%s - %d", this.getClass().getSimpleName(), this.getId()))
                 .append(System.lineSeparator())
                 .append(String.format("Energy Output: %d", this.getTotalEnergyOutput()))
                 .append(System.lineSeparator())
