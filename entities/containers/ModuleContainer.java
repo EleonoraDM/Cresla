@@ -4,19 +4,24 @@ import entities.modules.Module;
 import entities.modules.absorbing.AbsorbingModule;
 import entities.modules.energy.EnergyModule;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ModuleContainer implements Container {
 
     private int moduleCapacity;
+    private List<Module> modules;
     private Map<Integer, EnergyModule> energyModules;
     private Map<Integer, AbsorbingModule> absorbingModules;
 
     public ModuleContainer(int moduleCapacity) {
         this.moduleCapacity = moduleCapacity;
+        this.modules = new LinkedList<>();
         this.energyModules = new LinkedHashMap<>();
         this.absorbingModules = new LinkedHashMap<>();
+    }
+
+    private List<Module> getAllRegisteredModules(){
+        return Collections.unmodifiableList(this.modules);
     }
 
     private Module searchModuleById(int id) {
@@ -37,6 +42,7 @@ public class ModuleContainer implements Container {
             this.removeOldestModule();
         }
         this.energyModules.put(energyModule.getId(), energyModule);
+        this.modules.add(energyModule);
     }
 
     public void addAbsorbingModule(AbsorbingModule absorbingModule) {
@@ -49,6 +55,7 @@ public class ModuleContainer implements Container {
         }
 
         this.absorbingModules.put(absorbingModule.getId(), absorbingModule);
+        this.modules.add(absorbingModule);
     }
 
     @Override
